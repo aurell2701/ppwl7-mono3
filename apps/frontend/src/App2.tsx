@@ -23,7 +23,7 @@ export default function App() {
       const res = await fetch(`${baseUrl}/users?key=${apiKey}`);
     if (!res.ok) {
         const errorText = await res.text();
-        console.error("Gagal ambil data:", await res.text())
+        console.error("Gagal ambil data:", errorText);
         return
     }
 
