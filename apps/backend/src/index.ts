@@ -65,7 +65,7 @@ const app = new Elysia()
   .get("/users", () => {
     return {
       data: [
-        { id: "1", name: "Aurell", email: "Aurellceca@example.com" },
+        { id: "1", name: "Aurell", email: "aurellceca@example.com" },
         { id: "2", name: "Celyn", email: "celyn@example.com" },
         { id: "3", name: "Sista", email: "sista@example.com" }
       ],
