@@ -62,14 +62,21 @@ const app = new Elysia()
   }))
 
   // Users
-  .get("/users", async () => {
-    const users = await prisma.user.findMany();
+  get("/users", async (c) => {
+    const key = c.query.key;
+    if (key !== "learn") {
+      c.set.status = 401;
+      return { message: "Unauthorized" };
+    }
+
     return {
-      data: users,
-      message: "User list retrieved",
+      data: [
+        { id: 1, name: "Aurell (Untan)", email: "h1101241043@student.untan.ac.id" },
+        { id: 2, name: "Leo Tobing", email: "leo@example.com" },
+        { id: 3, name: "John Doe", email: "john@example.com" }
+      ]
     };
   })
-
   // --- AUTH ---
 
   .get("/auth/login", ({ redirect }) => {
