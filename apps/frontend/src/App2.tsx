@@ -17,8 +17,9 @@ export default function App() {
 
   const loadUsers = async () => {
   try {
+
     const baseUrl = "https://monorepo-be-flame.vercel.app"; 
-    const res = await fetch(`${baseUrl}/users?key=learn`);
+    const res = await fetch("http://localhost:3000/users?key=learn");
 
     if (!res.ok) {
       const txt = await res.text();
