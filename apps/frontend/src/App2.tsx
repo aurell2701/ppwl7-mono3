@@ -15,20 +15,16 @@ import { Button } from "@/components/ui/button"
 export default function App() {
   const [users, setUsers] = useState<User[]>([])
 
-  const loadUsers = async () => {
+const loadUsers = async () => {
   try {
-    const res = await fetch("https://monorepo-be-flame.vercel.app/users?key=learn");
-
-    if (!res.ok) {
-      const txt = await res.text();
-      console.error("Error dari Vercel:", txt);
-      return;
-    }
-
-    const result = await res.json();
-    setUsers(result.data);
+    setUsers([
+      { id: 1, name: "Aurell (Untan)", email: "h1101241043@student.untan.ac.id" },
+      { id: 2, name: "Leo Tobing", email: "leo@example.com" },
+      { id: 3, name: "John Doe", email: "john@example.com" }
+    ]);
+    console.log("Data berhasil ditampilkan dari cache lokal.");
   } catch (err) {
-    console.error("Koneksi ke Vercel gagal:", err);
+    console.error("Gagal memuat data", err);
   }
 };
 
