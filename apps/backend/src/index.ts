@@ -27,9 +27,8 @@ const tokenStore = new Map<string, { access_token: string; refresh_token?: strin
 const app = new Elysia()
   // ✅ CORS dinamis
   .use(cors({
-    origin: true,
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization']
+    origin: [process.env.FRONTEND_URL ?? "", process.env.TEST_URL ?? ""],
+    credentials: true
   }))
 
   // ✅ Middleware proteksi /users
