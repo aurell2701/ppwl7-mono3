@@ -16,23 +16,22 @@ export default function App() {
   const [users, setUsers] = useState<User[]>([])
 
   const loadUsers = async () => {
-    try {
-      const baseUrl = import.meta.env.VITE_BACKEND_URL as string;
-      const apiKey = import.meta.env.VITE_API_KEY as string;
+  try {
+    const baseUrl = "https://monorepo-be-flame.vercel.app"; 
+    const res = await fetch(`${baseUrl}/users?key=learn`);
 
-      const res = await fetch("http://localhost:3000/users?key=learn");
-      if (!res.ok) {
-        const errorText = await res.text();
-        console.error("Gagal ambil data:", errorText);
-        return; 
-      }
-
-      const result: ApiResponse<User[]> = await res.json();
-      setUsers(result.data); // Pastikan mengambil field .data-nya
-    } catch (err) {
-      console.error("Network Error:", err);
+    if (!res.ok) {
+      const txt = await res.text();
+      console.error("Error dari Vercel:", txt);
+      return;
     }
-  };
+
+    const result = await res.json();
+    setUsers(result.data);
+  } catch (err) {
+    console.error("Koneksi ke Vercel gagal:", err);
+  }
+};
 
   useEffect(() => {
     loadUsers().catch((err) => console.error("Efek error:", err));
