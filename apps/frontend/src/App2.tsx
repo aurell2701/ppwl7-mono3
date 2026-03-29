@@ -21,21 +21,22 @@ export default function App() {
       const apiKey = import.meta.env.VITE_API_KEY as string;
 
       const res = await fetch(`${baseUrl}/users?key=${apiKey}`);
-    if (!res.ok) {
+      
+      if (!res.ok) {
         const errorText = await res.text();
         console.error("Gagal ambil data:", errorText);
-        return
-    }
+        return; 
+      }
 
-    const data: ApiResponse<User[]> = await res.json()
-    setUsers(data.data)
-  } catch (err) {
+      const result: ApiResponse<User[]> = await res.json();
+      setUsers(result.data); // Pastikan mengambil field .data-nya
+    } catch (err) {
       console.error("Network Error:", err);
-  }
-  }
+    }
+  };
 
   useEffect(() => {
-    loadUsers()
+    loadUsers().catch((err) => console.error("Efek error:", err));
   }, [])
 
   return (
