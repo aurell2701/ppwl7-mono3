@@ -62,11 +62,14 @@ const app = new Elysia()
   }))
 
   // Users
-  .get("/users", async () => {
-    const users = await prisma.user.findMany();
+  .get("/users", () => {
     return {
-      data: users,
-      message: "User list retrieved",
+      data: [
+        { id: "1", name: "Aurell", email: "Aurellceca@example.com" },
+        { id: "2", name: "Celyn", email: "celyn@example.com" },
+        { id: "3", name: "Sista", email: "sista@example.com" }
+      ],
+      message: "User list retrieved (Mock Data)",
     };
   })
 
