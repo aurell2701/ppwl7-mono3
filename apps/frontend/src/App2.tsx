@@ -16,9 +16,14 @@ export default function App() {
   const [users, setUsers] = useState<User[]>([])
 
   const loadUsers = async () => {
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users`)
-    const data: ApiResponse<User[]> = await res.json()
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users?key=learn`)
 
+    if (!res.ok) {
+        console.error("Gagal ambil data:", await res.text())
+        return
+    }
+
+    const data: ApiResponse<User[]> = await res.json()
     setUsers(data.data)
   }
 
