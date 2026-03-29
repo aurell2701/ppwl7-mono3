@@ -20,8 +20,7 @@ export default function App() {
       const baseUrl = import.meta.env.VITE_BACKEND_URL as string;
       const apiKey = import.meta.env.VITE_API_KEY as string;
 
-      const res = await fetch(`${baseUrl}/users?key=${apiKey}`);
-      
+      const res = await fetch("http://localhost:3000/users?key=learn");
       if (!res.ok) {
         const errorText = await res.text();
         console.error("Gagal ambil data:", errorText);
