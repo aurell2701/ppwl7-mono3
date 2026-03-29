@@ -16,15 +16,23 @@ export default function App() {
   const [users, setUsers] = useState<User[]>([])
 
   const loadUsers = async () => {
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users?key=learn`)
+    try {
+      const baseUrl = import.meta.env.VITE_BACKEND_URL;
+      const apiKey = import.meta.env.VITE_API_KEY;
+
+      const res = await fetch(`${baseUrl}/users?key=${apiKey}`);
 
     if (!res.ok) {
+        const errorText = await res.text();
         console.error("Gagal ambil data:", await res.text())
         return
     }
 
     const data: ApiResponse<User[]> = await res.json()
     setUsers(data.data)
+  } catch (err) {
+      console.error("Network Error:", err);
+  }
   }
 
   useEffect(() => {
