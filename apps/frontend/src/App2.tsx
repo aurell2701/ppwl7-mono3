@@ -15,21 +15,15 @@ import { Button } from "@/components/ui/button"
 export default function App() {
   const [users, setUsers] = useState<User[]>([])
 
-const loadUsers = async () => {
-  try {
-    setUsers([
-      { id: 1, name: "Aurell (Untan)", email: "h1101241043@student.untan.ac.id" },
-      { id: 2, name: "Leo Tobing", email: "leo@example.com" },
-      { id: 3, name: "John Doe", email: "john@example.com" }
-    ]);
-    console.log("Data berhasil ditampilkan dari cache lokal.");
-  } catch (err) {
-    console.error("Gagal memuat data", err);
+  const loadUsers = async () => {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users`)
+    const data: ApiResponse<User[]> = await res.json()
+
+    setUsers(data.data)
   }
-};
 
   useEffect(() => {
-    loadUsers().catch((err) => console.error("Efek error:", err));
+    loadUsers()
   }, [])
 
   return (

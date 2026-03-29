@@ -4,6 +4,7 @@ import { Elysia } from "elysia";
 import { cors } from "@elysiajs/cors";
 import { swagger } from "@elysiajs/swagger";
 import { cookie } from "@elysiajs/cookie";
+import { prisma } from "../prisma/db";
 import { createOAuthClient, getAuthUrl } from "./auth";
 import { getCourses, getCourseWorks, getSubmissions } from "./classroom";
 import type { ApiResponse, HealthCheck, User } from "shared";
@@ -61,21 +62,14 @@ const app = new Elysia()
   }))
 
   // Users
-  get("/users", async (c) => {
-    const key = c.query.key;
-    if (key !== "learn") {
-      c.set.status = 401;
-      return { message: "Unauthorized" };
-    }
-
+  .get("/users", async () => {
+    const users = await prisma.user.findMany();
     return {
-      data: [
-        { id: 1, name: "Aurell (Untan)", email: "h1101241043@student.untan.ac.id" },
-        { id: 2, name: "Leo Tobing", email: "leo@example.com" },
-        { id: 3, name: "John Doe", email: "john@example.com" }
-      ]
+      data: users,
+      message: "User list retrieved",
     };
   })
+
   // --- AUTH ---
 
   .get("/auth/login", ({ redirect }) => {
